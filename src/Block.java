@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 
+import javafx.scene.shape.Rectangle;
+
 public class Block {
 	
-	ArrayList<Tile> usedTiles = new ArrayList<Tile>();
+	ArrayList<Rectangle> rectangles;
+	ArrayList<Tile> usedTiles;
 	
-	public void placeBlocks(ArrayList<Tile> usedTiles) {
-		this.usedTiles = usedTiles;
+	public void placeBlocks(ArrayList<Rectangle> usedTiles) {
+		this.rectangles = rectangles;
 	}
 	
 	public void placeBlock(Tile tile) {
-		if(!usedTiles.contains(tile)) {
-			usedTiles.add(tile);
+		if(!rectangles.contains(tile)) {
+			rectangles.add(tile);
 			tile.setPiece(this);
 		}
 	}
@@ -22,8 +25,8 @@ public class Block {
 	}
 	
 	public void deleteTile(Tile tile) {
-		if(usedTiles.contains(tile)) {
-			usedTiles.remove(tile);
+		if(rectangles.contains(tile)) {
+			rectangles.remove(tile);
 			tile.deletePiece();
 		}
 	}

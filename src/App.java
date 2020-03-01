@@ -24,63 +24,26 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 	
-	double mainSceneX, mainSceneY;
+	Double mainSceneX = new Double(0);
+	Double mainSceneY = new Double(0);
 	  // Die Liste unserer Nodes (hier Vierecke)
 	private ArrayList<Shape> nodes;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
-		//GridPane root = new GridPane();
 		Group root = new Group();
-		/*Scene scene = new Scene(root, 800, 800);
-		primaryStage.setScene(scene);
-		primaryStage.show();*/
 	    Scene scene = new Scene(root, 400, 300);
+	    BlockHandler blockHandler = new BlockHandler(mainSceneX, mainSceneY);
 
 	    // Viereck, das Bewegt wird
-	    Rectangle rectToMove = new Rectangle(50, 50, 50, 50);
+	    Rectangle rectToMove = blockHandler.newRectangle(50, 50, 50, 50);
 	    // Viereck, das unser Ziel ist
-	    Rectangle rectTarget = new Rectangle(150, 150, 100, 100);
+	    Rectangle rectTarget = blockHandler.newRectangle(150, 150, 100, 100);
 
 	    // hinzufügen unserer Vierecke (Nodes)
 	    nodes = new ArrayList<Shape>();
 	    nodes.add(rectToMove);
 	    nodes.add(rectTarget);
-
-	    // hier setzen wir die Maus, sodass sie
-	    // eine Hand wird, wenn wir drüber fahren
-	    rectToMove.setCursor(Cursor.HAND);
-
-	    // das wird aufgerufen, wenn unsere Maus auf
-	    // das Viereck drückt
-	    rectToMove.setOnMousePressed((t) -> {
-	    	mainSceneX = t.getSceneX();
-	    	mainSceneY = t.getSceneY();
-	    	Rectangle r = (Rectangle) (t.getSource());
-	    	r.toFront();
-	    });
-
-	    // Wird aufgerufen, wenn unser Viereck sich bewegt
-	    // also sehr häufig
-	    rectToMove.setOnMouseDragged((t) -> {
-	      double offsetX = t.getSceneX() - mainSceneX;
-	      double offsetY = t.getSceneY() - mainSceneY;
-
-	      Rectangle r = (Rectangle) (t.getSource());
-
-	      r.setX(r.getX() + offsetX);
-	      r.setY(r.getY() + offsetY);
-
-	      mainSceneX = t.getSceneX();
-	      mainSceneY = t.getSceneY();
-	      checkBounds(rectTarget);
-	    });
-
-	    // wird aufgerufen, wenn man die Maus loslässt
-	    rectToMove.setOnMouseReleased((t) -> {
-	    	rectToMove.setFill(Color.BLACK);
-	    });
 
 	    root.getChildren().addAll(rectToMove,rectTarget);
 
