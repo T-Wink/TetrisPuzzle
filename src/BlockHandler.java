@@ -1,54 +1,26 @@
+import java.util.ArrayList;
+import java.util.List;
 
-
-import javafx.scene.Cursor;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
 
 public class BlockHandler {
 	
-	Double mainSceneX, mainSceneY;
+	static List<Block> done = new ArrayList<>();
 	
-	public BlockHandler(double mainSceneX, double mainSceneY) {
-		this.mainSceneX = mainSceneX;
-		this.mainSceneY = mainSceneY;
+	public static void handleClicked(MouseEvent t, Block b) {
+		b.onMouseClicked(t);
+		done.add(b);
+		for(Block neighbor : b.getNeighboringBlocks()) if(neighbor != null && !done.contains(neighbor)) handleClicked(t, neighbor);
+		// Check if this is the first call if handleDragged - if so, all blocks of the figure have been checked, and the list can be cleared
+		System.out.println(b);
+		if(b == done.get(0)) done.clear();
 	}
 	
-	public Rectangle newRectangle(double x, double y, double width, double height) {
-		Rectangle newRectangle = new Rectangle(x, y, width, height);
-		// hier setzen wir die Maus, sodass sie
-	    // eine Hand wird, wenn wir drüber fahren
-		newRectangle.setCursor(Cursor.HAND);
-
-	    // das wird aufgerufen, wenn unsere Maus auf
-	    // das Viereck drückt
-		newRectangle.setOnMousePressed((t) -> {
-	    	mainSceneX = t.getSceneX();
-	    	mainSceneY = t.getSceneY();
-	    	Rectangle r = (Rectangle) (t.getSource());
-	    	r.toFront();
-	    });
-
-	    // Wird aufgerufen, wenn unser Viereck sich bewegt
-	    // also sehr häufig
-		newRectangle.setOnMouseDragged((t) -> {
-	      double offsetX = t.getSceneX() - mainSceneX;
-	      double offsetY = t.getSceneY() - mainSceneY;
-
-	      Rectangle r = (Rectangle) (t.getSource());
-
-	      r.setX(r.getX() + offsetX);
-	      r.setY(r.getY() + offsetY);
-
-	      mainSceneX = t.getSceneX();
-	      mainSceneY = t.getSceneY();
-	    });
-
-	    // wird aufgerufen, wenn man die Maus loslässt
-		newRectangle.setOnMouseReleased((t) -> {
-			newRectangle.setFill(Color.BLACK);
-	    });
-		
-		return newRectangle;
+	public static void handleDragged(MouseEvent t, Block b) {
+		b.onMouseDragged(t);
+		done.add(b);
+		for(Block neighbor : b.getNeighboringBlocks()) if(neighbor != null && !done.contains(neighbor)) handleDragged(t, neighbor);
+		// Check if this is the first call if handleDragged - if so, all blocks of the figure have been checked, and the list can be cleared
+		if(b == done.get(0)) done.clear();
 	}
-
 }
