@@ -12,7 +12,6 @@ public class BlockHandler {
 		done.add(b);
 		for(Block neighbor : b.getNeighboringBlocks()) if(neighbor != null && !done.contains(neighbor)) handleClicked(t, neighbor);
 		// Check if this is the first call if handleDragged - if so, all blocks of the figure have been checked, and the list can be cleared
-		System.out.println(b);
 		if(b == done.get(0)) done.clear();
 	}
 	

@@ -1,5 +1,12 @@
+import java.util.ArrayList;
+
+import javafx.scene.Group;
+import javafx.scene.shape.Shape;
 
 public class FigureHandler {
+
+	static ArrayList<Shape> nodes;
+	static Group root;
 	
 	public static Block[] getLeftRotatedL() {
 		Block b1 = new Block(Grid.getStandardX(), Grid.getStandardY(), Grid.getStandardSize());
@@ -25,5 +32,18 @@ public class FigureHandler {
 		Block b3 = new Block(Grid.getStandardX(), Grid.getStandardY(), Grid.getStandardSize(), b2);
 		Block[] tripleBlock = {b1, b2, b3};
 		return tripleBlock;
+	}
+	
+	public static void setNodes(ArrayList<Shape> nodes) {
+		FigureHandler.nodes = nodes;
+	}
+	
+	public static void setRoot(Group root) {
+		FigureHandler.root = root;
+	}
+	
+	public static void addNewFigure(Block[] figure) {
+		for(Block b : figure) nodes.add(b);
+	    root.getChildren().addAll(figure);
 	}
 }

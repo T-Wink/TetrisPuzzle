@@ -32,26 +32,21 @@ public class App extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Group root = new Group();
-	    Scene scene = new Scene(root, 400, 300);
-	    RectangleHandler rectangleHandler = new RectangleHandler(mainSceneX, mainSceneY);
-
-	    // Viereck, das Bewegt wird
-	    //Block block1 = new Block(50, 50, 50);
-	    //Block block2 = new Block(100, 50, 50, block1);
-	    Block[] leftL = FigureHandler.getLeftRotatedL();
-	    // Viereck, das unser Ziel ist
-	    //Rectangle rectTarget = rectangleHandler.newRectangle(150, 150, 100, 100);
-
-	    // hinzuf�gen unserer Vierecke (Nodes)
+	    Scene scene = new Scene(root, 1280, 700);
 	    nodes = new ArrayList<Shape>();
-	    //nodes.add(block1);
-	    //nodes.add(block2);
-	    //nodes.add(rectTarget);
-	    for(Block b : leftL) nodes.add(b);
-
-	    //root.getChildren().addAll(block1,rectTarget, block2);
-	    root.getChildren().addAll(leftL);
-
+	    Grid grid = new Grid();
+	    FigureHandler.setNodes(nodes);
+	    FigureHandler.setRoot(root);
+	    
+	    for(int i = 0; i < 9; i++) {
+			for(int j = 0; j < 9; j++) {
+				nodes.add(grid.getTiles()[i][j]);
+				root.getChildren().add(grid.getTiles()[i][j]);
+			}
+		}
+	    
+	    Block[] leftL = FigureHandler.getLeftRotatedL();
+	    FigureHandler.addNewFigure(leftL);
 
 	    primaryStage.setScene(scene);
 	    primaryStage.show();

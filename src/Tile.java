@@ -1,14 +1,19 @@
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class Tile {
+public class Tile extends Rectangle {
 	
 	boolean isUsed = false;
 	Block usedBlock;
-	int xPos, yPos;
 	
 	
-	public Tile(int xPos, int yPos) {
-		this.xPos = xPos;
-		this.yPos = yPos;
+	public Tile(double xPos, double yPos, double width) {
+		this.setX(xPos);
+		this.setY(yPos);
+		this.setWidth(width);
+		this.setHeight(width);
+		this.setFill(Color.BEIGE);
+		this.setStroke(Color.BLACK);
 	}
 	
 	public void setBlock(Block usedBlock) {

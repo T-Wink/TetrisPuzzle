@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -34,19 +32,17 @@ public class Block extends Rectangle {
 		
 		this.setCursor(Cursor.HAND);
 
-	    // das wird aufgerufen, wenn unsere Maus auf
-	    // das Viereck dr�ckt
+
 		this.setOnMousePressed((t) -> {
 	    	BlockHandler.handleClicked(t, this);
 	    });
 
-	    // Wird aufgerufen, wenn unser Viereck sich bewegt
-	    // also sehr h�ufig
+
 		this.setOnMouseDragged((t) -> {
 	      BlockHandler.handleDragged(t, this);
 	    });
 
-	    // wird aufgerufen, wenn man die Maus losl�sst
+		
 		this.setOnMouseReleased((t) -> {
 			this.setFill(Color.BLACK);
 	    });
