@@ -26,7 +26,6 @@ public class App extends Application {
 	
 	Double mainSceneX = new Double(0);
 	Double mainSceneY = new Double(0);
-	  // Die Liste unserer Nodes (hier Vierecke)
 	private ArrayList<Shape> nodes;
 
 	@Override
@@ -45,34 +44,11 @@ public class App extends Application {
 			}
 		}
 	    
-	    Block[] leftL = FigureHandler.getLeftRotatedL();
-	    FigureHandler.addNewFigure(leftL);
+	    FigureHandler.init();
 
 	    primaryStage.setScene(scene);
 	    primaryStage.show();
 	  }
-
-	  // Diese Methode sucht nach einer Kollision. Danke an Jewelsea von StackOverflow
-	  // Diese Methode wird jedes mal aufgerufen wenn man unser kleines Viereck
-	  // gedraggt wird.
-	  private void checkBounds(Shape block) {
-		  boolean collisionDetected = false;
-		  for (Shape static_bloc : nodes) {
-		    if (static_bloc != block) {
-		      static_bloc.setFill(Color.YELLOW);
-
-		      if (block.getBoundsInParent().intersects(static_bloc.getBoundsInParent())) {
-		        collisionDetected = true;
-		      }
-		    }
-		  }
-
-		  if (collisionDetected) {
-		    block.setFill(Color.GREEN);
-		  } else {
-		    block.setFill(Color.BLUE);
-		  }
-		}
 	
 	public static void main(String[] args) {
 		launch(args);

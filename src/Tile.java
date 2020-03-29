@@ -4,6 +4,7 @@ import javafx.scene.shape.Rectangle;
 public class Tile extends Rectangle {
 	
 	boolean isUsed = false;
+	boolean isHovered = false;
 	Block usedBlock;
 	
 	
@@ -16,12 +17,25 @@ public class Tile extends Rectangle {
 		this.setStroke(Color.BLACK);
 	}
 	
-	public void setBlock(Block usedBlock) {
-		if(this.usedBlock == null) {
-			this.usedBlock = usedBlock;
-			isUsed = true;
-			usedBlock.placeAt(this);
-		}
+	public void setUsed() {
+		this.setFill(Block.color);
+		isUsed = true;
+		isHovered = false;
+	}
+	
+	public void setEmpty() {
+		this.setFill(Color.BEIGE);
+		isUsed = false;
+	}
+	
+	public void setHovered() {
+		this.setFill(Color.GRAY);
+		isHovered = true;
+	}
+	
+	public void setUnhovered() {
+		this.setFill(Color.BEIGE);
+		isHovered = false;
 	}
 
 }

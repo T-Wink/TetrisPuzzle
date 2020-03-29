@@ -7,7 +7,9 @@ public class Block extends Rectangle {
 	
 	Block leftNeighbor, rightNeighbor, upNeighbor, downNeighbor;
 	Tile usedTile;
-	Double mainSceneX, mainSceneY, width;
+	Double mainSceneX, mainSceneY, width, standardX, standardY;
+	static Color color = Color.BROWN;
+	Block[] figure;
 	
 	
 	public Block(double x, double y, double width, Block... blocks) {
@@ -44,10 +46,17 @@ public class Block extends Rectangle {
 
 		
 		this.setOnMouseReleased((t) -> {
-			this.setFill(Color.BLACK);
+			BlockHandler.handleReleased(this);
 	    });
+		
+		this.setFill(this.color);
+		this.setStroke(Color.BLACK);
 	}
 	
+	public Block(double width, Block... blocks) {
+		this(0, 0, width, blocks);
+	}
+
 	public void placeAt(Tile tile) {
 		if(usedTile != null) return;
 		this.usedTile = tile;
@@ -102,9 +111,33 @@ public class Block extends Rectangle {
 		return downNeighbor;
 	}
 	
+	public Double getStandardX() {
+		return standardX;
+	}
+
+	public void setStandardX(Double standardX) {
+		this.standardX = standardX;
+	}
+
+	public Double getStandardY() {
+		return standardY;
+	}
+
+	public void setStandardY(Double standardY) {
+		this.standardY = standardY;
+	}
+
 	public Block[] getNeighboringBlocks() {
 		Block[] neighbors = {leftNeighbor, rightNeighbor, upNeighbor, downNeighbor};
 		return neighbors;
+	}
+	
+	public Block[] getFigure() {
+		return this.figure;
+	}
+	
+	public void setFigure(Block[] figure) {
+		this.figure = figure;
 	}
 	
 	public void onMouseDragged(MouseEvent t) {
@@ -121,6 +154,12 @@ public class Block extends Rectangle {
 		mainSceneX = t.getSceneX();
     	mainSceneY = t.getSceneY();
     	this.toFront();
+	}
+
+	public void setStandard(double x, double y) {
+		this.standardX = x;
+		this.standardY = y;
+		
 	}
 	
 }
