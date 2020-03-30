@@ -10,15 +10,19 @@ public class Grid {
 	static Double standardFigure2Y = Grid.standardFigureY;
 	static Double standardFigure3X = Grid.standardFigure2X + 350;
 	static Double standardFigure3Y = Grid.standardFigureY;
+	
+	private Grid() {
+		
+	}
 
-	public Grid() {
+	public static void init() {
 		tiles = new Tile[9][9];
 		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) tiles[i][j] = new Tile(i * standardTileSize, j * standardTileSize, standardTileSize);
+			for(int j = 0; j < 9; j++) tiles[i][j] = new Tile(j * standardTileSize, i * standardTileSize, standardTileSize);
 		}
 	}
 	
-	public Grid(Double standardX, Double standardY, Double standardSize) {
+	public static void init(Double standardX, Double standardY, Double standardSize) {
 		Grid.standardFigureX = standardX;
 		Grid.standardFigureY = standardY;
 		Grid.standardFigure2X = Grid.standardFigureX + 350;
@@ -29,7 +33,7 @@ public class Grid {
 		Grid.standardTileSize = standardBlockSize + 1;
 		tiles = new Tile[9][9];
 		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) tiles[i][j] = new Tile(i * standardTileSize, j * standardTileSize, standardTileSize);
+			for(int j = 0; j < 9; j++) tiles[i][j] = new Tile(j * standardTileSize, i * standardTileSize, standardTileSize);
 		}
 	}
 	

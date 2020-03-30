@@ -26,25 +26,21 @@ public class App extends Application {
 	
 	Double mainSceneX = new Double(0);
 	Double mainSceneY = new Double(0);
-	private ArrayList<Shape> nodes;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Group root = new Group();
 	    Scene scene = new Scene(root, 1280, 700);
-	    nodes = new ArrayList<Shape>();
-	    Grid grid = new Grid();
-	    FigureHandler.setNodes(nodes);
+	    Grid.init();
 	    FigureHandler.setRoot(root);
 	    
 	    for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
-				nodes.add(grid.getTiles()[i][j]);
-				root.getChildren().add(grid.getTiles()[i][j]);
+				root.getChildren().add(Grid.getTiles()[i][j]);
 			}
 		}
 	    
-	    FigureHandler.init();
+	    FigureHandler.initFiguresToPlace();
 
 	    primaryStage.setScene(scene);
 	    primaryStage.show();

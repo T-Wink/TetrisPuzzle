@@ -56,11 +56,14 @@ public class Block extends Rectangle {
 	public Block(double width, Block... blocks) {
 		this(0, 0, width, blocks);
 	}
+	
+	public Block(Block...blocks) {
+		this(0, 0, Grid.getStandardBlockSize(), blocks);
+	}
 
 	public void placeAt(Tile tile) {
 		if(usedTile != null) return;
 		this.usedTile = tile;
-		// TODO: for each neighboring tile, perform placeAt as well
 	}
 	
 	public void setLeftBlock(Block block) {

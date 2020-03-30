@@ -26,16 +26,12 @@ public class Tile extends Rectangle {
 	public void setEmpty() {
 		this.setFill(Color.BEIGE);
 		isUsed = false;
+		isHovered = false;
 	}
 	
 	public void setHovered() {
 		this.setFill(Color.GRAY);
 		isHovered = true;
-	}
-	
-	public void setUnhovered() {
-		this.setFill(Color.BEIGE);
-		isHovered = false;
 	}
 
 }

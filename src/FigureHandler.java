@@ -7,10 +7,9 @@ import javafx.scene.shape.Shape;
 
 public class FigureHandler {
 
-	static ArrayList<Shape> nodes;
 	static Group root;
 	
-	public static void init() {
+	public static void initFiguresToPlace() {
 		Block[] firstFigure = getRandomShape(0);
 	    Block[] secondFigure = getRandomShape(1);
 	    Block[] thirdFigure = getRandomShape(2);
@@ -31,6 +30,11 @@ public class FigureHandler {
 		return place == 0 ? Grid.getStandardY() : (place == 1 ? Grid.getStandardFigure2Y() : Grid.getStandardFigure3Y());
 	}
 	
+	private static void setStandardXYAndSetFigure(Block[] figure) {
+		setStandardXYForFigure(figure);
+		for(Block b : figure) b.setFigure(figure);
+	}
+	
 	public static Block[] getLeftRotatedL(int place) {
 		if(place > 2) return null;
 		double posX = getStandardX(place);
@@ -46,8 +50,7 @@ public class FigureHandler {
 		b4.setRightBlock(b3);
 		b3.setLeftBlock(b4);
 		Block[] leftRotatedL = {b1, b2, b3, b4};
-		setStandardXYForFigure(leftRotatedL);
-		for(Block b : leftRotatedL) b.setFigure(leftRotatedL);
+		setStandardXYAndSetFigure(leftRotatedL);
 		return leftRotatedL;
 	}
 	
@@ -58,8 +61,7 @@ public class FigureHandler {
 		Block b1 = new Block(posX, posY, Grid.getStandardBlockSize());
 		Block b2 = new Block(Grid.getStandardBlockSize(), b1);
 		Block[] doubleBlock = {b1, b2};
-		setStandardXYForFigure(doubleBlock);
-		for(Block b : doubleBlock) b.setFigure(doubleBlock);
+		setStandardXYAndSetFigure(doubleBlock);
 		return doubleBlock;
 	}
 	
@@ -70,8 +72,7 @@ public class FigureHandler {
 		Block b2 = new Block(Grid.getStandardBlockSize(), b1);
 		Block b3 = new Block(Grid.getStandardBlockSize(), b2);
 		Block[] tripleBlock = {b1, b2, b3};
-		setStandardXYForFigure(tripleBlock);
-		for(Block b : tripleBlock) b.setFigure(tripleBlock);
+		setStandardXYAndSetFigure(tripleBlock);
 		return tripleBlock;
 	}
 	
@@ -88,9 +89,34 @@ public class FigureHandler {
 		b5.setUpBlock(b4);
 		b4.setDownBlock(b5);
 		Block[] tFigure = {b1, b2, b3, b4, b5};
-		setStandardXYForFigure(tFigure);
-		for(Block b : tFigure) b.setFigure(tFigure);
+		setStandardXYAndSetFigure(tFigure);
 		return tFigure;
+	}
+	
+	public static Block[] getLeftRotatedT(int place) {
+		double posX = getStandardX(place);
+		double posY = getStandardY(place);
+		Block b1 = new Block(posX, posY, Grid.getStandardBlockSize());
+		Block b2 = new Block();
+		b2.setUpBlock(b1);
+		b1.setDownBlock(b2);
+		Block b3 = new Block();
+		b3.setUpBlock(b2);
+		b2.setDownBlock(b3);
+		Block b4 = new Block(b2);
+		Block b5 = new Block(b4);
+		Block[] tFigure = {b1, b2, b3, b4, b5};
+		setStandardXYAndSetFigure(tFigure);
+		return tFigure;
+	}
+	
+	public static Block[] getSingleBlock(int place) {
+		double posX = getStandardX(place);
+		double posY = getStandardY(place);
+		Block b1 = new Block(posX, posY, Grid.getStandardBlockSize());
+		Block[] singleBlockFigure = {b1};
+		setStandardXYAndSetFigure(singleBlockFigure);
+		return singleBlockFigure;
 	}
 	
 	
@@ -105,12 +131,13 @@ public class FigureHandler {
 			return getTripleBlock(place);
 		case 3:
 			return getT(place);
+		case 4:
+			return getLeftRotatedT(place);
+		case 5:
+			return getSingleBlock(place);
 		default:
 			return getRandomShape(place);
 		}
-	}
-	public static void setNodes(ArrayList<Shape> nodes) {
-		FigureHandler.nodes = nodes;
 	}
 	
 	public static void setRoot(Group root) {
@@ -122,7 +149,6 @@ public class FigureHandler {
 	}
 	
 	public static void addNewFigure(Block[] figure) {
-		for(Block b : figure) nodes.add(b);
 	    root.getChildren().addAll(figure);
 	}
 }
