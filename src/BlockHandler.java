@@ -1,11 +1,13 @@
 import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 public class BlockHandler {
+	
+	private static int numberOfObjects = 81 + 1 + 1; //81 Tiles, highScore and score Texts
+	
+	private BlockHandler() {
+		
+	}
 	
 	public static void handleClicked(MouseEvent t, Block b) {
 		for(Block figureBlock : b.getFigure()) figureBlock.onMouseClicked(t);
@@ -21,7 +23,8 @@ public class BlockHandler {
 			setTilesUsed(b);
 			for(Block figureBlock : b.getFigure()) FigureHandler.getRoot().getChildren().remove(figureBlock);
 			handleRowColumnOrBlockFilled();
-			if(FigureHandler.getRoot().getChildren().size() < 82) FigureHandler.initFiguresToPlace();
+			GameHandler.updateScore(b.getFigure().length);
+			if(FigureHandler.getRoot().getChildren().size() <= numberOfObjects) FigureHandler.initFiguresToPlace();
 		}
 		else putBack(b);
 		
@@ -34,7 +37,7 @@ public class BlockHandler {
 		for(int i = 0; i < 9; i++) {
 			usedTilesInRow = new ArrayList<Tile>();
 			for(int j = 0; j < 9; j++) {
-				if(isOneFourOrSeven(i) && isOneFourOrSeven(j)) {
+				if(i % 3 == 1 && j % 3 == 1) {
 					ArrayList<Tile> usedTiles = getUsedTilesOfTileBlock(i, j);
 					if(usedTiles.size() == 9) tilesToSetEmpty.addAll(usedTiles);
 				}
@@ -46,15 +49,9 @@ public class BlockHandler {
 				}
 				
 			}
-			System.out.println(usedTilesInRow.size());
 			if(usedTilesInRow.size() == 9) tilesToSetEmpty.addAll(usedTilesInRow);
 		}
 		setTilesEmpty(tilesToSetEmpty);
-		
-	}
-
-	private static boolean isOneFourOrSeven(int i) {
-		return i == 1 || i == 4 || i == 7;
 	}
 
 	private static ArrayList<Tile> getUsedTilesOfTileBlock(int row, int column) {
@@ -70,6 +67,8 @@ public class BlockHandler {
 			figureBlock.setX(figureBlock.getStandardX());
 			figureBlock.setY(figureBlock.getStandardY());
 		}
+		
+		for(Tile tile : getHoveredTiles()) tile.setEmpty();
 	}
 
 	private static void setTilesUsed(Block b) {
@@ -78,6 +77,7 @@ public class BlockHandler {
 	
 	private static void setTilesEmpty(ArrayList<Tile> tilesToSetEmpty) {
 		for(Tile t : tilesToSetEmpty) t.setEmpty();
+		GameHandler.updateScore(tilesToSetEmpty.size());
 	}
 
 	private static void updateWhichTilesAreHovered(Block b) {

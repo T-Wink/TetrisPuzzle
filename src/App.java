@@ -1,25 +1,8 @@
-import java.util.ArrayList;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
-import javafx.application.Application;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -30,9 +13,23 @@ public class App extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Group root = new Group();
-	    Scene scene = new Scene(root, 1280, 700);
+	    Scene scene = new Scene(root, 1280, Grid.standardTileSize * 10);
 	    Grid.init();
 	    FigureHandler.setRoot(root);
+	    Integer highScore = GameHandler.loadHighScore();
+	    Integer score = 0;
+	    Text highScoreText = new Text("HighScore: " + highScore);
+	    highScoreText.setStyle("-fx-font: 24 arial;");
+	    highScoreText.relocate(Grid.getStandardTileSize() * 9 + 50, Grid.getStandardTileSize() / 2);
+	    highScoreText.setFill(Color.BLACK);
+	    Text scoreText = new Text("Score: " + score);
+	    scoreText.setStyle("-fx-font: 24 arial;");
+	    scoreText.relocate(Grid.getStandardTileSize() * 9 + 50, Grid.getStandardTileSize());
+	    scoreText.setFill(Color.BLACK);
+	    GameHandler.setScoreText(scoreText);
+	    GameHandler.setHighScoreText(highScoreText);
+	    GameHandler.setScore(score);
+	    
 	    
 	    for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
@@ -40,9 +37,15 @@ public class App extends Application {
 			}
 		}
 	    
+	    scoreText.setVisible(true);
+	    root.getChildren().addAll(highScoreText, scoreText);
+	    
 	    FigureHandler.initFiguresToPlace();
 
 	    primaryStage.setScene(scene);
+	    primaryStage.setOnCloseRequest(v -> {
+	    	GameHandler.persistHighScore();
+	    });
 	    primaryStage.show();
 	  }
 	

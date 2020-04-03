@@ -4,11 +4,11 @@ public class Grid {
 	static Double standardBlockSize = (double) 50;
 	static Double standardTileSize = standardBlockSize + 1;
 	static Tile[][] tiles;
-	static Double standardFigureX = (double) 200;
-	static Double standardFigureY = standardTileSize * 9 + 50;
-	static Double standardFigure2X = Grid.standardFigureX + 350;
+	static Double standardFigureX = (double) standardTileSize * 10;
+	static Double standardFigureY = standardTileSize * 2 + 50;
+	static Double standardFigure2X = Grid.standardFigureX + standardTileSize * 5;
 	static Double standardFigure2Y = Grid.standardFigureY;
-	static Double standardFigure3X = Grid.standardFigure2X + 350;
+	static Double standardFigure3X = Grid.standardFigure2X + standardTileSize * 5;
 	static Double standardFigure3Y = Grid.standardFigureY;
 	
 	private Grid() {
@@ -104,6 +104,36 @@ public class Grid {
 	public static void setStandardBlockSize(Double standardBlockSize) {
 		Grid.standardBlockSize = standardBlockSize;
 	}
+
+	public static Double getStandardTileSize() {
+		return standardTileSize;
+	}
+
+	public static void setStandardTileSize(Double standardTileSize) {
+		Grid.standardTileSize = standardTileSize;
+	}
+
+	public static Double getStandardFigureX() {
+		return standardFigureX;
+	}
+
+	public static void setStandardFigureX(Double standardFigureX) {
+		Grid.standardFigureX = standardFigureX;
+	}
+
+	public static Double getStandardFigureY() {
+		return standardFigureY;
+	}
+
+	public static void setStandardFigureY(Double standardFigureY) {
+		Grid.standardFigureY = standardFigureY;
+	}
+
+	public static void setTiles(Tile[][] tiles) {
+		Grid.tiles = tiles;
+	}
+	
+	
 	
 	
 	
