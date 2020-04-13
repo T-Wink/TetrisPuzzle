@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -46,6 +47,8 @@ public class App extends Application {
 	    primaryStage.setOnCloseRequest(v -> {
 	    	GameHandler.persistHighScore();
 	    });
+
+	    for(Rectangle r : Grid.getTicTacToeGrid()) root.getChildren().add(r);
 	    primaryStage.show();
 	  }
 	

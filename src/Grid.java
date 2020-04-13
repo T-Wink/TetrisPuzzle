@@ -1,4 +1,11 @@
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+/**
+ * The Grid initializes the 9x9 Tile-Objects and possesses the standard position / size attributes for figures / blocks and tiles
+ * @author Timon
+ *
+ */
 public class Grid {
 	
 	static Double standardBlockSize = (double) 50;
@@ -10,6 +17,8 @@ public class Grid {
 	static Double standardFigure2Y = Grid.standardFigureY;
 	static Double standardFigure3X = Grid.standardFigure2X + standardTileSize * 5;
 	static Double standardFigure3Y = Grid.standardFigureY;
+	static Color ticTacToeColor = Color.BLACK;
+	static Rectangle[] ticTacToeGrid;
 	
 	private Grid() {
 		
@@ -20,6 +29,18 @@ public class Grid {
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) tiles[i][j] = new Tile(j * standardTileSize, i * standardTileSize, standardTileSize);
 		}
+		
+		ticTacToeGrid = new Rectangle[4];
+		for(int i = 1; i < 3; i++) {
+			Rectangle rect1 = new Rectangle(0, standardTileSize * 3 * i, standardTileSize * 9, 1);
+			rect1.setFill(ticTacToeColor);
+			Rectangle rect2 = new Rectangle(standardTileSize * 3 * i, 0, 1, standardTileSize * 9);
+			rect2.setFill(ticTacToeColor);
+			ticTacToeGrid[i == 1 ? i - 1 : i] = rect1;
+			ticTacToeGrid[i == 1 ? i : i + 1] = rect2;
+		}
+		
+		
 	}
 	
 	public static void init(Double standardX, Double standardY, Double standardSize) {
@@ -31,10 +52,11 @@ public class Grid {
 		Grid.standardFigure3Y = Grid.standardFigureY;
 		Grid.standardBlockSize = standardSize;
 		Grid.standardTileSize = standardBlockSize + 1;
-		tiles = new Tile[9][9];
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) tiles[i][j] = new Tile(j * standardTileSize, i * standardTileSize, standardTileSize);
-		}
+		init();
+	}
+	
+	public static Rectangle[] getTicTacToeGrid() {
+		return ticTacToeGrid;
 	}
 	
 	public static double getStandardX() {

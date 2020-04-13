@@ -9,12 +9,21 @@ public class Block extends Rectangle {
 	Tile usedTile;
 	Double mainSceneX, mainSceneY, width, standardX, standardY;
 	static Color color = Color.BROWN;
+	static Color borderColor = Color.BLACK;
 	Block[] figure;
 	
 	
-	public Block(double x, double y, double width, Block... blocks) {
-		super(x, y, width, width);
-		this.width = width; // TODO: width auslagern oder statisch machen
+	/**
+	 * Block constructor; sets position, width/height, neighboring blocks, event-handling, stroke (border color) and color
+	 * @param x position on the x-axis
+	 * @param y position on the y-axis
+	 * @param width width/height of the Block
+	 * @param blocks optional neighboring Blocks which have to be given in the following order: left, right, up, down
+	 * Here, the association (setXXXBlock) is set on both sides, whereas if you just call setXXXBlock it is only associated on one side
+	 */
+	public Block(double x, double y, Block... blocks) {
+		super(x, y, Grid.getStandardBlockSize(), Grid.getStandardBlockSize());
+		this.width = Grid.getStandardBlockSize(); // TODO: width auslagern oder statisch machen
 		if(blocks.length > 0) {
 			setLeftBlock(blocks[0]);
 			blocks[0].setRightBlock(this);
@@ -49,21 +58,17 @@ public class Block extends Rectangle {
 			BlockHandler.handleReleased(this);
 	    });
 		
-		this.setFill(this.color);
-		this.setStroke(Color.BLACK);
+		this.setFill(Block.color);
+		this.setStroke(Block.borderColor);
 	}
 	
-	public Block(double width, Block... blocks) {
-		this(0, 0, width, blocks);
-	}
-	
+	/**
+	 * Since x and y position are adjusted automatically when neighboring blocks are set, there may be no need to pass them as arguments
+	 * if a neighboring block already has a set position
+	 * @param blocks optional neighboring Blocks which have to be given in the following order: left, right, up, down
+	 */
 	public Block(Block...blocks) {
-		this(0, 0, Grid.getStandardBlockSize(), blocks);
-	}
-
-	public void placeAt(Tile tile) {
-		if(usedTile != null) return;
-		this.usedTile = tile;
+		this(0, 0, blocks);
 	}
 	
 	public void setLeftBlock(Block block) {
@@ -144,7 +149,6 @@ public class Block extends Rectangle {
 	}
 	
 	public void onMouseDragged(MouseEvent t) {
-		//TODO: Das hier verstehen
 		double offsetX = t.getSceneX() - mainSceneX;
 	    double offsetY = t.getSceneY() - mainSceneY;
 	    this.setX(this.getX() + offsetX);

@@ -5,7 +5,6 @@ public class Tile extends Rectangle {
 	
 	boolean isUsed = false;
 	boolean isHovered = false;
-	Block usedBlock;
 	
 	
 	public Tile(double xPos, double yPos, double width) {
@@ -14,7 +13,7 @@ public class Tile extends Rectangle {
 		this.setWidth(width);
 		this.setHeight(width);
 		this.setFill(Color.BEIGE);
-		this.setStroke(Color.BLACK);
+		this.setStroke(Color.GRAY);
 	}
 	
 	public void setUsed() {

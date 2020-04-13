@@ -3,7 +3,7 @@ import javafx.scene.input.MouseEvent;
 
 public class BlockHandler {
 	
-	private static int numberOfObjects = 81 + 1 + 1; //81 Tiles, highScore and score Texts
+	private static int numberOfObjects = 81 + 1 + 1 + 4; //81 Tiles, highScore and score Texts, the four rectangles constituting the ticTacToe-Grid
 	
 	private BlockHandler() {
 		
