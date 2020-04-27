@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+
+import javafx.animation.FillTransition;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class BlockHandler {
 	
@@ -76,7 +80,18 @@ public class BlockHandler {
 	}
 	
 	private static void setTilesEmpty(ArrayList<Tile> tilesToSetEmpty) {
-		for(Tile t : tilesToSetEmpty) t.setEmpty();
+		for(Tile t : tilesToSetEmpty) {
+			// Create a transition from the color of the blocks to the color of the background tiles
+			FillTransition fill = new FillTransition();
+			fill.setAutoReverse(true);
+			fill.setCycleCount(1);
+			fill.setDuration(Duration.millis(500));
+			fill.setFromValue(Block.color);
+			fill.setToValue(Tile.fillColor);
+			fill.setShape(t);
+			fill.play();
+			t.setEmpty();
+		}
 		GameHandler.updateScore(tilesToSetEmpty.size());
 	}
 

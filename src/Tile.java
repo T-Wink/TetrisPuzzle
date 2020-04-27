@@ -5,6 +5,8 @@ public class Tile extends Rectangle {
 	
 	boolean isUsed = false;
 	boolean isHovered = false;
+	static Color fillColor = Color.BEIGE;
+	static Color strokeColor = Color.GRAY;
 	
 	
 	public Tile(double xPos, double yPos, double width) {
@@ -12,8 +14,8 @@ public class Tile extends Rectangle {
 		this.setY(yPos);
 		this.setWidth(width);
 		this.setHeight(width);
-		this.setFill(Color.BEIGE);
-		this.setStroke(Color.GRAY);
+		this.setFill(fillColor);
+		this.setStroke(strokeColor);
 	}
 	
 	public void setUsed() {
@@ -31,6 +33,10 @@ public class Tile extends Rectangle {
 	public void setHovered() {
 		this.setFill(Color.GRAY);
 		isHovered = true;
+	}
+
+	public Color getColor() {
+		return fillColor;
 	}
 
 }
